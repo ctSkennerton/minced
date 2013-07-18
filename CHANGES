@@ -1,0 +1,7 @@
+Revision history for MinCED
+
+0.1.0   15-Mar-2011
+        Initial fork from CRT
+        More robust parsing of FASTA files and support for multiFASTA files
+        Support for finding CRISPRs in datasets with more than one sequence
+        Fixed some compilation warnings

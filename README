@@ -1,0 +1,65 @@
+MinCED - Mining CRISPRs in Environmental Datasets
+
+
+MinCED is a program to find Clustered Regularly Interspaced Short Palindromic
+Repeats (CRISPRs) in full genomes or environmental datasets such as metagenomes,
+in which sequence size can be anywhere from 100 to 800 bp. MinCED runs from the
+command-line and was derived from CRT (http://www.room220.com/crt/):
+  Charles Bland et al., CRISPR Recognition Tool (CRT): a tool for automatic
+  detection of clustered regularly interspaced palindromic repeats, BMC
+  Bioinformatics 8, no. 1 (2007): 209.
+
+
+INSTALLATION
+
+You need to install these dependencies first:
+  * Java (http://www.java.com/en/download/)
+
+In the MinCED folder, compile the source files: 
+  * javac  *.java
+
+To run MinCED, in the same folder:
+  * java minced [options] inputFile [outputFile]
+
+The help page can be obtained by typing:
+  * java minced --help
+
+You can get the MinCED version this way:
+  * java minced --version
+
+
+EXAMPLES
+
+Finding CRISPRs in the E. coli genome:
+    java minced ecoli.fna
+
+To find repeats in short sequences, we need to decrease the minimum number of
+repeats to find. For example, in 100 bp reads, we could not possibly find more
+than 2 repeats:
+    java minced -minNR 2 metagenome.fna
+
+The output can be large, so save it in a file:
+    java minced -minNR 2 metagenome.fna metagenome.crisprs
+
+COPYRIGHT AND LICENSE
+
+Copyright 2011 Florent ANGLY <florent.angly@gmail.com>
+
+MinCED is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+MinCED is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with MinCED.  If not, see <http://www.gnu.org/licenses/>.
+
+
+BUGS
+
+All complex software has bugs lurking in it, and this program is no exception.
+If you find a bug please email me at <florent.angly@gmail.com> so that I can
+make MinCED better.
+
