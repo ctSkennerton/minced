@@ -1,4 +1,8 @@
 Revision history for MinCED
+0.1.2   18-Nov_2013
+        Minor bug fixes to gff output format
+
+
 0.1.1   19-Jul-2013
         Added in new output formats:
             * summary gff format
