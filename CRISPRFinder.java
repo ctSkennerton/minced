@@ -1,5 +1,4 @@
 import java.io.*;
-import java.io.File;
 import java.util.Vector;
 
 public class CRISPRFinder
@@ -14,12 +13,26 @@ public class CRISPRFinder
    private int minSpacerLength;
    private int maxSpacerLength;
    private int searchWindowLength;
-
+   private int outputformat;
+   private boolean printSpacers;
+   private PrintStream spacers;
+   
    DNASequence sequence = null;
    int sequenceLength = 0;
+   private int totalCrisprCount = 0;
 
 
-   public CRISPRFinder(String _inputFileName, String _outputFileName, int _screenDisplay, int _minNumRepeats, int _minRepeatLength, int _maxRepeatLength, int _minSpacerLength, int _maxSpacerLength, int _searchWindowLength)
+   public CRISPRFinder(String _inputFileName,
+		   String _outputFileName, 
+		   int _screenDisplay, 
+		   int _minNumRepeats, 
+		   int _minRepeatLength, 
+		   int _maxRepeatLength, 
+		   int _minSpacerLength, 
+		   int _maxSpacerLength, 
+		   int _searchWindowLength,
+		   int _outputformat,
+		   boolean _spacers)
    {
       inputFileName = _inputFileName;
       outputFileName = _outputFileName;
@@ -31,29 +44,70 @@ public class CRISPRFinder
       minSpacerLength = _minSpacerLength;
       maxSpacerLength = _maxSpacerLength;
       searchWindowLength = _searchWindowLength;
+      outputformat = _outputformat;
+      printSpacers = _spacers;
+  
+      if(_spacers) {
+    	  String input_file_prefix = removeExtention(inputFileName);
+    	  File outputFile = new File(input_file_prefix + "_spacers.fa");
+
+    	  FileOutputStream outputFileStream;
+    	  try {
+    		  outputFileStream = new FileOutputStream(outputFile, false);
+        	  spacers = new PrintStream(outputFileStream);
+    	  } catch (FileNotFoundException e) {
+    		  // TODO Auto-generated catch block
+    		  e.printStackTrace();
+    	  }
+      }
+      
    }
 
+   private static String removeExtention(String filePath) {
+	    // These first few lines the same as Justin's
+	    File f = new File(filePath);
 
+	    // if it's a directory, don't remove the extention
+	    if (f.isDirectory()) return filePath;
+
+	    String name = f.getName();
+
+	    // Now we know it's a file - don't need to do any special hidden
+	    // checking or contains() checking because of:
+	    final int lastPeriodPos = name.lastIndexOf('.');
+	    if (lastPeriodPos <= 0)
+	    {
+	        // No period after first character - return name as it was passed in
+	        return filePath;
+	    }
+	    else
+	    {
+	        // Remove the last period and everything after it
+	        File renamed = new File(f.getParent(), name.substring(0, lastPeriodPos));
+	        return renamed.getPath();
+	    }
+	}
+   
    public boolean goCRISPRFinder()
    {
       File inputFile = new File(inputFileName);
       if (! inputFile.exists())
       {
-         System.out.println("File name does not exist:  " + inputFile.getPath());
+         System.err.println("File name does not exist:  " + inputFile.getPath());
          return false;
       }
-      System.out.println("\n\nReading file '" + inputFile.getPath() + "'");
+      //System.out.println("\n\nReading file '" + inputFile.getPath() + "'");
       FASTAReader fastaReader = new FASTAReader(inputFile.getPath());
       if (! fastaReader.isFASTA())
       {
-         System.out.println("File '" + inputFile.getPath() + "' does not seem to be FASTA-formatted.");
+         System.err.println("File '" + inputFile.getPath() + "' does not seem to be FASTA-formatted.");
          return false;
       }
 
       while ( fastaReader.read() )
       {
          sequence = new DNASequence(fastaReader.getSequence(), fastaReader.getName(), fastaReader.getDesc());
-         System.out.println("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)");
+         //System.out.println("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)");
 
          /*
          // Check that sequence is a valid DNA sequence
@@ -71,12 +125,12 @@ public class CRISPRFinder
          }
          catch (Exception e)
          {
-            System.out.println ("Error processing input file '" + inputFile.getPath() + "'. Please, check contents.\n");
+            System.err.println ("Error processing input file '" + inputFile.getPath() + "'. Please, check contents.\n");
          }
 
       }
 
-      System.out.println("Done!");
+      //System.out.println("Done!");
       return true;
    }
 
@@ -97,7 +151,7 @@ public class CRISPRFinder
          // Change window length
          int oldSearchWindowlength = searchWindowLength;
          searchWindowLength = 8;
-         System.out.println("Changing window length to " + searchWindowLength + " instead of " + oldSearchWindowlength);
+         System.err.println("Changing window length to " + searchWindowLength + " instead of " + oldSearchWindowlength);
       }
 
       double spacerToSpacerMaxSimilarity = 0.62;
@@ -110,7 +164,7 @@ public class CRISPRFinder
       if (skips < 1)
          skips = 1;
 
-      System.out.println("Searching for repeats...");
+      //System.out.println("Searching for repeats...");
       long repeatSearchStart = System.currentTimeMillis();
 
       SearchUtil searchUtil = new SearchUtil();
@@ -169,8 +223,8 @@ public class CRISPRFinder
       }
 
       long repeatSearchEnd = System.currentTimeMillis();
-      System.out.println("Time to search for repeats:  " + (repeatSearchEnd - repeatSearchStart) + " ms");
-      System.out.println(CRISPRVector.size() + " possible CRISPR(s) found" + "\n");
+      //System.out.println("Time to search for repeats:  " + (repeatSearchEnd - repeatSearchStart) + " ms");
+      //System.out.println(CRISPRVector.size() + " possible CRISPR(s) found" + "\n");
 
 
       // ********************** Display CRISPR elements ********************** //
@@ -188,8 +242,8 @@ public class CRISPRFinder
             if ( outputFileName.equals("") )
                outputFileName = "a.out";
 
-            System.out.println("Writing results in file '" + outputFileName + "'");
-            System.out.println("");
+            //System.out.println("Writing results in file '" + outputFileName + "'");
+            //System.out.println("");
 
             File outputFile = new File(outputFileName);
             if ( readNum == 1 && outputFile.exists() )
@@ -203,34 +257,53 @@ public class CRISPRFinder
             out = new PrintStream(outputFileStream);
          }
 
-         out.print("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)\n");
-         out.print("\n");
-
          if (repeatsFound)
          {
-            int repeatLength, numRepeats, numSpacers;
+             if(outputformat == 0) {
+                 out.print("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)\n");
+                 out.print("\n");        	 
+             }
+        	 //int repeatLength, numRepeats, numSpacers;
             CRISPR currCRISPR;
 
-            String repeat, spacer, prevSpacer;
-            repeat = spacer = prevSpacer = "";
+            //String repeat, spacer, prevSpacer;
+            //repeat = spacer = prevSpacer = "";
 
             //add 1 to each position, to offset programming languagues that begin at 0 rather than 1
             for (int k = 0; k < CRISPRVector.size(); k++)
             {
-               currCRISPR = (CRISPR)CRISPRVector.elementAt(k);
-               out.print("CRISPR " + (k + 1) + "   Range: " + (currCRISPR.start() + 1) + " - " +  (currCRISPR.end() + 1) + "\n");
-               out.print(currCRISPR.toString());
-               out.print("Repeats: " + currCRISPR.numRepeats() + "\t" +  "Average Length: " + currCRISPR.averageRepeatLength() + "\t\t");
-               out.print("Average Length: " +  currCRISPR.averageSpacerLength() + "\n\n");
-               out.print("\n\n");
+                currCRISPR = (CRISPR)CRISPRVector.elementAt(k);
+                if(outputformat > 0) {
+                	String crispr_id = "CRISPR" + (++totalCrisprCount);
+                	out.print(sequence.getName() + "\tminced\tCRISPR\t");
+                    out.print((currCRISPR.start() + 1) + "\t" + (currCRISPR.end() + 2) + "\t");
+                    out.print(currCRISPR.numRepeats() + "\t.\t.\tID="+ crispr_id);
+                    out.print("\n");
+                    if(outputformat == 2) {
+                    	out.print(currCRISPR.toGff(sequence.getName(), crispr_id));
+                    }
+                } else {
+                    out.print("CRISPR " + (++totalCrisprCount) + "   Range: " + (currCRISPR.start() + 1) + " - " +  (currCRISPR.end() + 1) + "\n");
+                    out.print(currCRISPR.toString());
+                    out.print("Repeats: " + currCRISPR.numRepeats() + "\t" +  "Average Length: " + currCRISPR.averageRepeatLength() + "\t\t");
+                    out.print("Average Length: " +  currCRISPR.averageSpacerLength() + "\n\n");                	
+                }
+                if(printSpacers) {
+                	for (int i = 0; i < currCRISPR.numSpacers(); ++i) {
+                    	spacers.print(">"+ sequence.getName() +"_CRISPR_"+ (totalCrisprCount) +"_spacer_"+ (i+1)+"\n" + currCRISPR.spacerStringAt(i) + "\n");
+                	}
+                }
+
+
             }
-            //out.print("Time to find repeats: " + (repeatSearchEnd - repeatSearchStart) + " ms\n\n");
+            if(outputformat == 0) {
+            	out.print("Time to find repeats: " + (repeatSearchEnd - repeatSearchStart) + " ms\n\n");
+            	out.print("\n");
+            }
          }
 
-         out.print("\n");
 
-         if (!repeatsFound)
-            out.print("No CRISPR elements were found.\n\n");
+
 
          if (screenDisplay == 0)
             out.close();

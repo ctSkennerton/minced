@@ -1,5 +1,14 @@
 Revision history for MinCED
-
+0.1.1   19-Jul-2013
+        Added in new output formats:
+            * summary gff format
+                - outputs the start and end of the whole CRISPR locus
+            * full gff format
+                - on top of what is written in the summary format, adds
+                  in individual repeat_unit annotations for the direct repeats
+            * output all spacers found in fasta format
+                
+        
 0.1.0   15-Mar-2011
         Initial fork from CRT
         More robust parsing of FASTA files and support for multiFASTA files

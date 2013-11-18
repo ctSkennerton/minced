@@ -135,6 +135,16 @@ public class CRISPR
       return sum/numRepeats();
    }
 
+   public String toGff(String sequenceName, String parentName) {
+	   String str = "";
+	   for (int m = 0; m < numRepeats(); m++) {
+		   int repeat_position = (repeatAt(m) + 1);
+		   int repeat_end = repeat_position + this.repeatLength();
+		   str += sequenceName + "\tminced\trepeat_unit\t" + repeat_position + "\t" + repeat_end + "\t1.0\t.\t.\tParent=" + parentName + ";ID=DR"+(m + 1) + "\n";
+	   }
+	   return str;
+   }
+   
    public String toString()
    {
       String str = "";
