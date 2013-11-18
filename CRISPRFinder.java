@@ -262,6 +262,8 @@ public class CRISPRFinder
              if(outputformat == 0) {
                  out.print("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)\n");
                  out.print("\n");        	 
+             } else {
+             	out.println("##gff-version 3");
              }
         	 //int repeatLength, numRepeats, numSpacers;
             CRISPR currCRISPR;
