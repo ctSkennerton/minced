@@ -16,6 +16,7 @@ public class CRISPRFinder
    private int outputformat;
    private boolean printSpacers;
    private PrintStream spacers;
+   private boolean printGffHeader;
    
    DNASequence sequence = null;
    int sequenceLength = 0;
@@ -46,6 +47,7 @@ public class CRISPRFinder
       searchWindowLength = _searchWindowLength;
       outputformat = _outputformat;
       printSpacers = _spacers;
+      printGffHeader = true;
   
       if(_spacers) {
     	  String input_file_prefix = removeExtention(inputFileName);
@@ -263,7 +265,10 @@ public class CRISPRFinder
                  out.print("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)\n");
                  out.print("\n");        	 
              } else {
-             	out.println("##gff-version 3");
+            	 if(printGffHeader) {
+            		 out.println("##gff-version 3");
+            		 printGffHeader = false;
+            	 }
              }
         	 //int repeatLength, numRepeats, numSpacers;
             CRISPR currCRISPR;

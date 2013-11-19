@@ -2,7 +2,7 @@ import java.io.*;
 
 public class minced
 {
-   public static final String VERSION = "0.1.2";
+   public static final String VERSION = "0.1.3";
 	public static void main(String[] args)
    {
       //default values
@@ -277,9 +277,13 @@ public class minced
       System.out.println("minced " + VERSION);
 	   System.out.println("MinCED - Mining CRISPRs in Environmental Datasets (version " + VERSION + ")");
       System.out.println("Copyright 2011 Florent ANGLY <florent.angly@gmail.com>");
-      System.out.println("Updates by Connor Skennerton 2013");
-      System.out.println("Distributed under the GNU General Public License version 3");
+      System.out.println("          2013 Connor Skennerton <c.skennerton@gmail.com>");
       System.out.println();
+      System.out.println("Minced is a modified version of CRT (www.room220.com/crt)");
+      System.out.println("Charles Bland et al., CRISPR Recognition Tool (CRT): a tool for automatic");
+      System.out.println("detection of clustered regularly interspaced palindromic repeats");
+      System.out.println("BMC Bioinformatics 8, no. 1 (2007): 209.");
+      System.out.println("Distributed under the GNU General Public License version 3");
    }
 
 }
