@@ -266,9 +266,9 @@ public class minced
       System.out.println("          -spacers   Output a fasta formatted file containing the spacers. Default: false");
       System.out.println("          -h --help  Output this handy help message");
       System.out.println();
-      System.out.println("Examples: java minced ecoli.fna");
-      System.out.println("          java minced -minNR 2 metagenome.fna");
-      System.out.println("          java minced -minNR 2 metagenome.fna metagenome.crisprs");
+      System.out.println("Examples: minced ecoli.fna");
+      System.out.println("          minced -minNR 2 metagenome.fna");
+      System.out.println("          minced -minNR 2 metagenome.fna metagenome.crisprs");
       System.out.println();
    }
 
