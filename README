@@ -15,31 +15,35 @@ INSTALLATION
 You need to install these dependencies first:
   * Java (http://www.java.com/en/download/)
 
-In the MinCED folder, compile the source files: 
-  * javac  *.java
+there is a Makefile in the source directory so installation should be as simple as:
 
-To run MinCED, in the same folder:
-  * java minced [options] inputFile [outputFile]
+$ cd <download_folder>
+$ make
+
+To run MinCED:
+
+$ ./minced [options] file.fa
 
 The help page can be obtained by typing:
-  * java minced --help
+$ ./minced --help
 
 You can get the MinCED version this way:
-  * java minced --version
+$ ./minced --version
 
+NOTE: Always keep `minced` and `minced.jar` in the same folder!
 
 EXAMPLES
 
 Finding CRISPRs in the E. coli genome:
-    java minced ecoli.fna
+    $ minced ecoli.fna
 
 To find repeats in short sequences, we need to decrease the minimum number of
 repeats to find. For example, in 100 bp reads, we could not possibly find more
 than 2 repeats:
-    java minced -minNR 2 metagenome.fna
+    $ minced -minNR 2 metagenome.fna
 
 The output can be large, so save it in a file:
-    java minced -minNR 2 metagenome.fna metagenome.crisprs
+    $ minced -minNR 2 metagenome.fna metagenome.crisprs
 
 COPYRIGHT AND LICENSE
 
