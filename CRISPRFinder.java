@@ -50,10 +50,18 @@ public class CRISPRFinder
       printGffHeader = true;
   
       if(_spacers) {
-    	  String input_file_prefix = removeExtention(inputFileName);
-    	  File outputFile = new File(input_file_prefix + "_spacers.fa");
-
+    	  File outputFile;
     	  FileOutputStream outputFileStream;
+    	  
+    	  if(_outputFileName == "") {
+        	  String input_file_prefix = removeExtention(inputFileName);
+    		  outputFile = new File(input_file_prefix + "_spacers.fa");
+    		  
+    	  } else {
+        	  String input_file_prefix = removeExtention(outputFileName);
+        	  outputFile = new File(input_file_prefix + "_spacers.fa");
+    	  }
+
     	  try {
     		  outputFileStream = new FileOutputStream(outputFile, false);
         	  spacers = new PrintStream(outputFileStream);
