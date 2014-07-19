@@ -1,4 +1,7 @@
 Revision history for MinCED
+0.1.6	18-Jul-2014
+		Fix off-by-one error in the gff output.
+		
 0.1.5   03-Apl-2014
 		Changed the behaviour of the '-spacers' option. Without any
 		output file given the behaviour is the same as before, creating
