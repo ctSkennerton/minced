@@ -6,6 +6,8 @@
 
 ORIG_DIR=$(pwd $(dirname $0))
 
+cd $(dirname $0)
+
 TARGET_FILE=$(basename $0)
 # Iterate down a (possible) chain of symlinks
 i=0
