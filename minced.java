@@ -265,6 +265,7 @@ public class minced
       System.out.println("                     positions of CRISPR arrays and all repeat units. Default: false");
       System.out.println("          -spacers   Output a fasta formatted file containing the spacers. Default: false");
       System.out.println("          -h --help  Output this handy help message");
+      System.out.println("          --version  Output version information");
       System.out.println();
       System.out.println("Examples: minced ecoli.fna");
       System.out.println("          minced -minNR 2 metagenome.fna");
