@@ -48,6 +48,7 @@ The output can be large, so save it in a file:
 COPYRIGHT AND LICENSE
 
 Copyright 2011 Florent ANGLY <florent.angly@gmail.com>
+          2013-2015 Connor SKENNERTON <c.skennerton@gmail.com>
 
 MinCED is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -64,6 +65,4 @@ along with MinCED.  If not, see <http://www.gnu.org/licenses/>.
 BUGS
 
 All complex software has bugs lurking in it, and this program is no exception.
-If you find a bug please email me at <florent.angly@gmail.com> so that I can
-make MinCED better.
-
+If you find a bug please post an issue on github https://github.com/ctSkennerton/minced/issues
