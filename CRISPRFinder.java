@@ -128,7 +128,7 @@ public class CRISPRFinder
             continue;
          }
          */
-         
+         sequence.mask(100);
 
          try
          {
@@ -193,6 +193,13 @@ public class CRISPRFinder
 
          if (endSearch < beginSearch)  //should never occur
             endSearch = beginSearch;
+
+        int mask_end = sequence.masked(beginSearch, endSearch);
+        if(mask_end != -1)
+        {
+            j = mask_end;
+            continue;
+        }
 
          String text = sequence.substring(beginSearch, endSearch);
          pattern = sequence.substring(j, j + searchWindowLength);

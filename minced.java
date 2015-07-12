@@ -2,7 +2,7 @@ import java.io.*;
 
 public class minced
 {
-   public static final String VERSION = "0.1.6";
+   public static final String VERSION = "0.2.0";
 	public static void main(String[] args)
    {
       //default values
@@ -19,7 +19,7 @@ public class minced
       // 1 = summary gff
       // 2 = full gff
       int outformat = 0;
-      
+
       int numOptions = 0;
 
       if (args.length == 0)
@@ -35,13 +35,13 @@ public class minced
          printUsage();
          System.exit(1);
       }
-      
+
       if (args[0].equals("--version"))
       {
          printVersion();
          System.exit(1);
       }
-            
+
       int i = 0;
       while (args[i].charAt(0) == '-')
       {
@@ -118,7 +118,7 @@ public class minced
                }
                maxSpacerLength = Integer.parseInt(args[i]);
                numOptions += 2;
-            }               
+            }
             else if (args[i].endsWith("searchWL"))
             {
                i++;
@@ -173,14 +173,14 @@ public class minced
             System.exit(1);
          }
       }  // end while
-      
-      
+
+
       // Last options should be an input file and optional output file
       String inputFileName = "";
       String outputFileName = "";
       boolean outputFileSpecified = false;
       int numArgsRemaining = args.length - numOptions;
-      
+
       if (numArgsRemaining == 1)
          inputFileName = args[i];
       else if (numArgsRemaining == 2)
@@ -196,8 +196,8 @@ public class minced
          System.out.println("Try 'minced --help' for more information.");
          System.exit(1);
       }
-      
-      
+
+
       File inputFile = new File(inputFileName);
       if (!inputFile.exists())
       {
@@ -212,18 +212,18 @@ public class minced
       }
 
 
-      
+
       File outputFile;
       if (outputFileSpecified)
       {
          outputFile = new File(outputFileName);
-         
+
          if (outputFile.isDirectory())
          {
             System.out.println("You have entered an existing directory name. An output file name is required: " + outputFile.getAbsolutePath());
             System.exit(1);
          }
-         
+
          if (!outputFile.getAbsoluteFile().getParentFile().isDirectory())
          {
             System.out.println("You did not enter a valid file output path: " + outputFile.getAbsolutePath());
@@ -246,9 +246,9 @@ public class minced
       client.goCRISPRFinder();
 
    }
-   
+
    public static void printUsage()
-   {  
+   {
       System.out.println("MinCED, a program to find CRISPRs in shotgun DNA sequences or full genomes");
       System.out.println();
       System.out.println("Usage:    minced [options] file.fa [outputFile]");
@@ -274,7 +274,7 @@ public class minced
    }
 
    public static void printVersion()
-   {  
+   {
       System.out.println("minced " + VERSION);
 	   System.out.println("MinCED - Mining CRISPRs in Environmental Datasets (version " + VERSION + ")");
       System.out.println("Copyright 2011 Florent ANGLY <florent.angly@gmail.com>");

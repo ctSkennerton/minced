@@ -9,7 +9,7 @@ public class DNASequence
    private String desc;
    private String errorLog = "";
    private Pattern notDnaRe = Pattern.compile("([^ACGT])");
-   private IntervalTree<Integer> mask = new IntervalTree<Integer>();
+   private IntervalSearchTree mask = new IntervalSearchTree();
 
    public DNASequence(String sequence)
    {
@@ -359,9 +359,17 @@ public class DNASequence
            }
            if(n >= minimum)
            {
-               mask.addInterval(i, j, 0);
+               // add in the interval and save the end location as the data
+               mask.add(i, j);
            }
+           i = j;
+
        }
+   }
+
+   public int masked(int start, int end)
+   {
+       return mask.overlapEnd(start, end);
    }
 
 }
