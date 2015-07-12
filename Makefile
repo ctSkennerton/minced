@@ -6,7 +6,7 @@ JAR = jar
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
-CLASSES = CRISPR.java CRISPRFinder.java CRISPRUtil.java DNASequence.java FASTAReader.java SearchUtil.java minced.java
+CLASSES = CRISPR.java CRISPRFinder.java CRISPRUtil.java DNASequence.java FASTAReader.java SearchUtil.java minced.java Interval.java IntervalNode.java IntervalTree.java
 
 default: classes minced.jar
 

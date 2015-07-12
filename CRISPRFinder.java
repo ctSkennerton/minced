@@ -17,20 +17,20 @@ public class CRISPRFinder
    private boolean printSpacers;
    private PrintStream spacers;
    private boolean printGffHeader;
-   
+
    DNASequence sequence = null;
    int sequenceLength = 0;
    private int totalCrisprCount = 0;
 
 
    public CRISPRFinder(String _inputFileName,
-		   String _outputFileName, 
-		   int _screenDisplay, 
-		   int _minNumRepeats, 
-		   int _minRepeatLength, 
-		   int _maxRepeatLength, 
-		   int _minSpacerLength, 
-		   int _maxSpacerLength, 
+		   String _outputFileName,
+		   int _screenDisplay,
+		   int _minNumRepeats,
+		   int _minRepeatLength,
+		   int _maxRepeatLength,
+		   int _minSpacerLength,
+		   int _maxSpacerLength,
 		   int _searchWindowLength,
 		   int _outputformat,
 		   boolean _spacers)
@@ -48,15 +48,15 @@ public class CRISPRFinder
       outputformat = _outputformat;
       printSpacers = _spacers;
       printGffHeader = true;
-  
+
       if(_spacers) {
     	  File outputFile;
     	  FileOutputStream outputFileStream;
-    	  
+
     	  if(_outputFileName == "") {
         	  String input_file_prefix = removeExtention(inputFileName);
     		  outputFile = new File(input_file_prefix + "_spacers.fa");
-    		  
+
     	  } else {
         	  String input_file_prefix = removeExtention(outputFileName);
         	  outputFile = new File(input_file_prefix + "_spacers.fa");
@@ -70,7 +70,7 @@ public class CRISPRFinder
     		  e.printStackTrace();
     	  }
       }
-      
+
    }
 
    private static String removeExtention(String filePath) {
@@ -97,7 +97,7 @@ public class CRISPRFinder
 	        return renamed.getPath();
 	    }
 	}
-   
+
    public boolean goCRISPRFinder()
    {
       File inputFile = new File(inputFileName);
@@ -128,6 +128,7 @@ public class CRISPRFinder
             continue;
          }
          */
+         
 
          try
          {
@@ -244,7 +245,7 @@ public class CRISPRFinder
 
          FileOutputStream outputFileStream;
          PrintStream out;
-         
+
          if (screenDisplay == 1)
             out = System.out;
          else
@@ -271,7 +272,7 @@ public class CRISPRFinder
          {
              if(outputformat == 0) {
                  out.print("Sequence '" + sequence.getName() + "' (" + sequence.length() + " bp)\n");
-                 out.print("\n");        	 
+                 out.print("\n");
              } else {
             	 if(printGffHeader) {
             		 out.println("##gff-version 3");
@@ -301,7 +302,7 @@ public class CRISPRFinder
                     out.print("CRISPR " + (++totalCrisprCount) + "   Range: " + (currCRISPR.start() + 1) + " - " +  (currCRISPR.end() + 1) + "\n");
                     out.print(currCRISPR.toString());
                     out.print("Repeats: " + currCRISPR.numRepeats() + "\t" +  "Average Length: " + currCRISPR.averageRepeatLength() + "\t\t");
-                    out.print("Average Length: " +  currCRISPR.averageSpacerLength() + "\n\n");                	
+                    out.print("Average Length: " +  currCRISPR.averageSpacerLength() + "\n\n");
                 }
                 if(printSpacers) {
                 	for (int i = 0; i < currCRISPR.numSpacers(); ++i) {
