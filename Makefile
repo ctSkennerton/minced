@@ -2,17 +2,16 @@ JFLAGS = -g
 JC = javac
 JAR = jar
 .SUFFIXES: .java .class
+JAVA_FILES = CRISPR.java CRISPRFinder.java CRISPRUtil.java DNASequence.java FASTAReader.java SearchUtil.java minced.java IntervalSearchTree.java
+JAVA_CLASSES = $(JAVA_FILES:.java=.class)
+.PHONY: default clean test
 
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
-CLASSES = CRISPR.java CRISPRFinder.java CRISPRUtil.java DNASequence.java FASTAReader.java SearchUtil.java minced.java IntervalSearchTree.java
+default: minced.jar
 
-default: classes minced.jar
-
-classes: $(CLASSES:.java=.class)
-
-minced.jar: classes
+minced.jar: $(JAVA_CLASSES)
 	$(JAR) cfm minced.jar MANIFEST.txt *class
 
 clean:
