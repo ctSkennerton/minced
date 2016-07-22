@@ -39,7 +39,7 @@ public class minced
       if (args[0].equals("--version"))
       {
          printVersion();
-         System.exit(1);
+         System.exit(0);
       }
 
       int i = 0;
