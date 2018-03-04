@@ -12,10 +12,10 @@ JAVA_CLASSES = $(JAVA_FILES:.java=.class)
 default: minced.jar
 
 minced.jar: $(JAVA_CLASSES)
-	$(JAR) cfm minced.jar MANIFEST.txt *class
+	$(JAR) cfm minced.jar MANIFEST.txt $(JAVA_CLASSES)
 
 clean:
-	$(RM) *.class
+	$(RM) $(JAVA_CLASSES)
 
 test: minced.jar
 	@echo "Testing..."
