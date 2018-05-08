@@ -298,9 +298,9 @@ public class CRISPRFinder
                 currCRISPR = (CRISPR)CRISPRVector.elementAt(k);
                 if(outputformat > 0) {
                 	String crispr_id = "CRISPR" + (++totalCrisprCount);
-                	out.print(sequence.getName() + "\tminced:" + minced.VERSION + "\tCRISPR\t");
+                	out.print(sequence.getName() + "\tminced:" + minced.VERSION + "\trepeat_region\t");
                     out.print((currCRISPR.start() + 1) + "\t" + (currCRISPR.end() + 1) + "\t");
-                    out.print(currCRISPR.numRepeats() + "\t.\t.\tID="+ crispr_id);
+                    out.print(currCRISPR.numRepeats() + "\t.\t.\tID="+ crispr_id + ";rpt_family=CRISPR;rpt_unit_seq="+ currCRISPR.repeatStringAt(1));
                     out.print("\n");
                     if(outputformat == 2) {
                     	out.print(currCRISPR.toGff(sequence.getName(), crispr_id));
