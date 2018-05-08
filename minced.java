@@ -2,7 +2,7 @@ import java.io.*;
 
 public class minced
 {
-   public static final String VERSION = "0.2.2";
+   public static final String VERSION = "0.3.0";
 	public static void main(String[] args)
    {
       //default values
