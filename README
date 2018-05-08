@@ -2,12 +2,14 @@ MinCED - Mining CRISPRs in Environmental Datasets
 
 
 MinCED is a program to find Clustered Regularly Interspaced Short Palindromic
-Repeats (CRISPRs) in full genomes or environmental datasets such as metagenomes,
-in which sequence size can be anywhere from 100 to 800 bp. MinCED runs from the
-command-line and was derived from CRT (http://www.room220.com/crt/):
-  Charles Bland et al., CRISPR Recognition Tool (CRT): a tool for automatic
-  detection of clustered regularly interspaced palindromic repeats, BMC
-  Bioinformatics 8, no. 1 (2007): 209.
+Repeats (CRISPRs) in full genomes or environmental datasets such as assembled
+contigs from metagenomes. Iff you want to identify CRISPRs in raw short read 
+data, in the size range of 100-200bp try using Crass (https://github.com/ctskennerton/Crass)
+MinCED runs from the command-line and was derived from CRT (http://www.room220.com/crt/):
+  
+    Charles Bland et al., CRISPR Recognition Tool (CRT): a tool for automatic
+    detection of clustered regularly interspaced palindromic repeats, BMC
+    Bioinformatics 8, no. 1 (2007): 209.
 
 
 INSTALLATION
@@ -47,8 +49,8 @@ The output can be large, so save it in a file:
 
 COPYRIGHT AND LICENSE
 
-Copyright 2011 Florent ANGLY <florent.angly@gmail.com>
-          2013-2015 Connor SKENNERTON <c.skennerton@gmail.com>
+Copyright 2011      Florent ANGLY     <florent.angly@gmail.com>
+          2013-2018 Connor SKENNERTON <c.skennerton@gmail.com>
 
 MinCED is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
