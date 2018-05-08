@@ -1,4 +1,4 @@
-JFLAGS = -g
+JFLAGS = -g 
 JC = javac
 JAR = jar
 .SUFFIXES: .java .class
@@ -12,7 +12,7 @@ JAVA_CLASSES = $(JAVA_FILES:.java=.class)
 default: minced.jar
 
 minced.jar: $(JAVA_CLASSES)
-	$(JAR) cfm minced.jar MANIFEST.txt $(JAVA_CLASSES)
+	$(JAR) cfm minced.jar MANIFEST.txt *.class
 
 clean:
 	$(RM) $(JAVA_CLASSES)
