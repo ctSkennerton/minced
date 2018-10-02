@@ -1,4 +1,4 @@
-MinCED - Mining CRISPRs in Environmental Datasets
+# MinCED - Mining CRISPRs in Environmental Datasets
 
 
 MinCED is a program to find Clustered Regularly Interspaced Short Palindromic
@@ -12,42 +12,47 @@ MinCED runs from the command-line and was derived from CRT (http://www.room220.c
     Bioinformatics 8, no. 1 (2007): 209.
 
 
-INSTALLATION
+## INSTALLATION
 
 You need to install these dependencies first:
   * Java (http://www.java.com/en/download/)
 
 there is a Makefile in the source directory so installation should be as simple as:
 
-$ cd <download_folder>
-$ make
+    cd <download_folder>
+    make
 
 To run MinCED:
 
-$ ./minced [options] file.fa
+    ./minced [options] file.fa
 
 The help page can be obtained by typing:
-$ ./minced --help
+
+    ./minced --help
 
 You can get the MinCED version this way:
-$ ./minced --version
 
-NOTE: Always keep `minced` and `minced.jar` in the same folder!
+    ./minced --version
 
-EXAMPLES
+**NOTE: Always keep `minced` and `minced.jar` in the same folder!**
+
+## EXAMPLES
 
 Finding CRISPRs in the E. coli genome:
-    $ minced ecoli.fna
+
+    ./minced ecoli.fna
 
 To find repeats in short sequences, we need to decrease the minimum number of
 repeats to find. For example, in 100 bp reads, we could not possibly find more
 than 2 repeats:
-    $ minced -minNR 2 metagenome.fna
+
+    minced -minNR 2 metagenome.fna
 
 The output can be large, so save it in a file:
-    $ minced -minNR 2 metagenome.fna metagenome.crisprs
 
-COPYRIGHT AND LICENSE
+    minced -minNR 2 metagenome.fna metagenome.crisprs
+
+## COPYRIGHT AND LICENSE
 
 Copyright 2011      Florent ANGLY     <florent.angly@gmail.com>
           2013-2018 Connor SKENNERTON <c.skennerton@gmail.com>
@@ -64,7 +69,7 @@ You should have received a copy of the GNU General Public License
 along with MinCED.  If not, see <http://www.gnu.org/licenses/>.
 
 
-BUGS
+## BUGS
 
 All complex software has bugs lurking in it, and this program is no exception.
 If you find a bug please post an issue on github https://github.com/ctSkennerton/minced/issues
