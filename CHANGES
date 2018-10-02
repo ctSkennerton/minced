@@ -1,5 +1,20 @@
 Revision history for MinCED
 
+0.3.2 01-Oct-2018
+        Modify searching behaviour so that parital repeats that are at
+        the edges of contigs do not prevent the extension of other repeats
+        in the array. This has the caveat that the repeat is lost in
+        processing and the adjoining spacer is gone as well. However the
+        remaining spacers and repeats should be more accurate.
+
+0.3.1 31-Aug-2018
+        update GFF format to include the rpt_family annotation
+
+0.3.0 08-May-2018
+        Updates to GFF format to be inline with NCBI naming.
+        Fixed bug where a class wasn't included in the JAR file causing
+        occasional errors.
+
 0.2.0	13-Jul-2015
         New masking feature to skip over low complexity regions, such as
         runs of Ns, to increase speed with heavily scaffolded sequences
