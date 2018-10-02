@@ -4,11 +4,10 @@ public class CRISPRUtil
 {
    //identified repeats may represent only a subset of a larger repeat.  this method extends these
    //repeats as long as they continue to match within some range.  assumes there are at least two repeats
-   public static CRISPR getActualRepeatLength(CRISPR candidateCRISPR, int searchWindowLength, int minSpacerLength)
+   public static CRISPR getActualRepeatLength(CRISPR candidateCRISPR, int searchWindowLength, int minSpacerLength, int minNumRepeats)
    {
-      int numRepeats = candidateCRISPR.numRepeats();
       int firstRepeatStartIndex = candidateCRISPR.repeatAt(0);
-      int lastRepeatStartIndex = candidateCRISPR.repeatAt(numRepeats-1);
+      int lastRepeatStartIndex = candidateCRISPR.repeatAt(candidateCRISPR.numRepeats()-1);
 
       int shortestRepeatSpacing = candidateCRISPR.repeatAt(1) - candidateCRISPR.repeatAt(0);
       for (int i = 0; i < candidateCRISPR.numRepeats() - 1; i++)
@@ -36,8 +35,21 @@ public class CRISPRUtil
       threshold = .75;
 
       //(from the right side) extend the length of the repeat to the right as long as the last base of all repeats are at least threshold
-      while (!done && (rightExtensionLength <= maxRightExtensionLength) && (lastRepeatStartIndex + rightExtensionLength < sequenceLength))
+      while (!done && (rightExtensionLength <= maxRightExtensionLength))
       {
+         if (lastRepeatStartIndex + rightExtensionLength >= sequenceLength)
+         {
+            if (candidateCRISPR.numRepeats() - 1 > minNumRepeats)
+            {
+               candidateCRISPR.removeRepeat(candidateCRISPR.numRepeats() - 1);
+               lastRepeatStartIndex = candidateCRISPR.repeatAt(candidateCRISPR.numRepeats()-1);
+            }
+            else
+            {
+               done = true;
+               break;
+            }
+         }
          for (int k = 0; k < candidateCRISPR.numRepeats(); k++ )
          {
             currRepeatStartIndex = candidateCRISPR.repeatAt(k);
@@ -75,8 +87,21 @@ public class CRISPRUtil
       int maxLeftExtensionLength = shortestRepeatSpacing - minSpacerLength - rightExtensionLength;
 
       //(from the left side) extends the length of the repeat to the left as long as the first base of all repeats is at least threshold
-      while (!done && (leftExtensionLength <= maxLeftExtensionLength) && (firstRepeatStartIndex - leftExtensionLength >= 0) )
+      while (!done && (leftExtensionLength <= maxLeftExtensionLength) )
       {
+         if (firstRepeatStartIndex - leftExtensionLength >= 0)
+         {
+            if (candidateCRISPR.numRepeats() - 1 > minNumRepeats)
+            {
+               candidateCRISPR.removeRepeat(0);
+               firstRepeatStartIndex = candidateCRISPR.repeatAt(0);
+            }
+            else
+            {
+               done = true;
+               break;
+            }
+         }
          for (int k = 0; k < candidateCRISPR.numRepeats(); k++ )
          {
             currRepeatStartIndex = candidateCRISPR.repeatAt(k);

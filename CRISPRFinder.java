@@ -215,7 +215,7 @@ public class CRISPRFinder
 
          if ( (candidateCRISPR.numRepeats() >= minNumRepeats) )  //make sure minNumRepeats is always at least 2
          {
-            candidateCRISPR = CRISPRUtil.getActualRepeatLength(candidateCRISPR, searchWindowLength, minSpacerLength);
+            candidateCRISPR = CRISPRUtil.getActualRepeatLength(candidateCRISPR, searchWindowLength, minSpacerLength, minNumRepeats);
             actualRepeatLength = candidateCRISPR.repeatLength();
 
             if ( (actualRepeatLength >= minRepeatLength) && (actualRepeatLength <= maxRepeatLength) )
