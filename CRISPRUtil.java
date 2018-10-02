@@ -89,7 +89,7 @@ public class CRISPRUtil
       //(from the left side) extends the length of the repeat to the left as long as the first base of all repeats is at least threshold
       while (!done && (leftExtensionLength <= maxLeftExtensionLength) )
       {
-         if (firstRepeatStartIndex - leftExtensionLength >= 0)
+         if (firstRepeatStartIndex - leftExtensionLength < 0)
          {
             if (candidateCRISPR.numRepeats() - 1 > minNumRepeats)
             {
@@ -241,7 +241,6 @@ public class CRISPRUtil
       for (int i = 0 ; i < candidateCRISPR.numSpacers(); i++)
       {
          int currSpacerLength = candidateCRISPR.spacerStringAt(i).length();
-
          //checks that each spacer is of similar size to other spacers
          if ( Math.abs(currSpacerLength - initialSpacerLength) >  spacerToSpacerLengthOffset )
          {
