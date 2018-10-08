@@ -54,6 +54,7 @@ The output can be large, so save it in a file:
 
 ## COPYRIGHT AND LICENSE
 
+```
 Copyright 2011      Florent ANGLY     <florent.angly@gmail.com>
           2013-2018 Connor SKENNERTON <c.skennerton@gmail.com>
 
@@ -67,7 +68,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MinCED.  If not, see <http://www.gnu.org/licenses/>.
-
+```
 
 ## BUGS
 
