@@ -137,6 +137,7 @@ public class CRISPRFinder
          catch (Exception e)
          {
             System.err.println ("Error processing input file '" + inputFile.getPath() + "'. Please, check contents.\n");
+            e.printStackTrace(System.err);
          }
 
       }

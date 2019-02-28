@@ -41,7 +41,7 @@ public class CRISPRUtil
          {
             if (candidateCRISPR.numRepeats() - 1 > minNumRepeats)
             {
-               candidateCRISPR.removeRepeat(candidateCRISPR.numRepeats() - 1);
+               candidateCRISPR.removeRepeat(candidateCRISPR.lastRepeat());
                lastRepeatStartIndex = candidateCRISPR.repeatAt(candidateCRISPR.numRepeats()-1);
             }
             else
@@ -53,6 +53,7 @@ public class CRISPRUtil
          for (int k = 0; k < candidateCRISPR.numRepeats(); k++ )
          {
             currRepeatStartIndex = candidateCRISPR.repeatAt(k);
+            //System.out.println("currRepeatStartIndex: " + currRepeatStartIndex + " currRepeatStartIndex + rightExtensionLength " + (currRepeatStartIndex + rightExtensionLength) + " maxRightExtensionLength "+maxRightExtensionLength+" sequence length "+sequenceLength);
             currRepeat = DNASequence.seq.substring(currRepeatStartIndex, currRepeatStartIndex + rightExtensionLength);
             char lastChar = currRepeat.charAt(currRepeat.length() - 1);
 
