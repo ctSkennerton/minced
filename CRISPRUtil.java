@@ -94,7 +94,7 @@ public class CRISPRUtil
          {
             if (candidateCRISPR.numRepeats() - 1 > minNumRepeats)
             {
-               candidateCRISPR.removeRepeat(0);
+               candidateCRISPR.removeRepeat(candidateCRISPR.firstRepeat());
                firstRepeatStartIndex = candidateCRISPR.repeatAt(0);
             }
             else
