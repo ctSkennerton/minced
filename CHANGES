@@ -1,5 +1,10 @@
 Revision history for MinCED
 
+0.3.2 02-Mar-2019
+        Fix a bug that was causing some string indexing errors where
+        the bounds of the CRISPR was not being updated properly when
+        a partial repeat was removed.
+
 0.3.2 01-Oct-2018
         Modify searching behaviour so that parital repeats that are at
         the edges of contigs do not prevent the extension of other repeats

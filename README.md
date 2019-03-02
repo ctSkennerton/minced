@@ -56,7 +56,7 @@ The output can be large, so save it in a file:
 
 ```
 Copyright 2011      Florent ANGLY     <florent.angly@gmail.com>
-          2013-2018 Connor SKENNERTON <c.skennerton@gmail.com>
+          2013-2019 Connor SKENNERTON <c.skennerton@gmail.com>
 
 MinCED is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
