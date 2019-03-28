@@ -2,7 +2,7 @@ import java.io.*;
 
 public class minced
 {
-   public static final String VERSION = "0.3.3";
+   public static final String VERSION = "0.4.0";
 	public static void main(String[] args)
    {
       //default values
@@ -178,8 +178,11 @@ public class minced
       // Last options should be an input file and optional output file
       String inputFileName = "";
       String outputFileName = "";
+      String outputGffFileName = "";
       boolean outputFileSpecified = false;
+      boolean outputGffFileSpecified = false;
       int numArgsRemaining = args.length - numOptions;
+
 
       if (numArgsRemaining == 1)
          inputFileName = args[i];
@@ -188,6 +191,15 @@ public class minced
          inputFileName = args[i];
          outputFileSpecified = true;
          outputFileName = args[i + 1];
+         screenDisplay = 0;
+      }
+      else if (numArgsRemaining == 3)
+      {
+         inputFileName = args[i];
+         outputFileSpecified = true;
+         outputGffFileSpecified = true;
+         outputFileName = args[i + 1];
+         outputGffFileName = args[i + 2];
          screenDisplay = 0;
       }
       else
@@ -234,6 +246,7 @@ public class minced
 
       CRISPRFinder client = new CRISPRFinder(inputFileName,
     		  outputFileName,
+    		  outputGffFileName,
     		  screenDisplay,
     		  minNumRepeats,
     		  minRepeatLength,
@@ -251,7 +264,7 @@ public class minced
    {
       System.out.println("MinCED, a program to find CRISPRs in shotgun DNA sequences or full genomes");
       System.out.println();
-      System.out.println("Usage:    minced [options] file.fa [outputFile]");
+      System.out.println("Usage:    minced [options] file.fa [outputFile.txt] [outputFile.gff]");
       System.out.println();
       System.out.println("Options:  -searchWL  Length of search window used to discover CRISPRs (range: 6-9). Default: 8");
       System.out.println("          -minNR     Minimum number of repeats a CRISPR must contain. Default: 3");
@@ -268,8 +281,9 @@ public class minced
       System.out.println("          --version  Output version information");
       System.out.println();
       System.out.println("Examples: minced ecoli.fna");
-      System.out.println("          minced -minNR 2 metagenome.fna");
-      System.out.println("          minced -minNR 2 metagenome.fna metagenome.crisprs");
+      System.out.println("          minced metagenome.fna");
+      System.out.println("          minced metagenome.fna metagenome.crisprs");
+      System.out.println("          minced metagenome.fna metagenome.crisprs metagenome.gff");
       System.out.println();
    }
 

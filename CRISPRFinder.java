@@ -5,6 +5,7 @@ public class CRISPRFinder
 {
    private String inputFileName;
    private String outputFileName;
+   private String outputGffFileName;
 
    private int screenDisplay;
    private int minNumRepeats;
@@ -25,6 +26,7 @@ public class CRISPRFinder
 
    public CRISPRFinder(String _inputFileName,
 		   String _outputFileName,
+		   String _outputGffFileName,
 		   int _screenDisplay,
 		   int _minNumRepeats,
 		   int _minRepeatLength,
@@ -37,6 +39,7 @@ public class CRISPRFinder
    {
       inputFileName = _inputFileName;
       outputFileName = _outputFileName;
+      outputGffFileName = _outputGffFileName;
 
       screenDisplay = _screenDisplay;
       minNumRepeats = _minNumRepeats;
@@ -63,7 +66,7 @@ public class CRISPRFinder
     	  }
 
     	  try {
-    		  outputFileStream = new FileOutputStream(outputFile, false);
+    		    outputFileStream = new FileOutputStream(outputFile, false);
         	  spacers = new PrintStream(outputFileStream);
     	  } catch (FileNotFoundException e) {
     		  // TODO Auto-generated catch block
@@ -254,15 +257,16 @@ public class CRISPRFinder
          FileOutputStream outputFileStream;
          PrintStream out;
 
+         FileOutputStream outputGffFileStream;
+         PrintStream gffOut = null;
+
          if (screenDisplay == 1)
             out = System.out;
          else
          {
-            if ( outputFileName.equals("") )
+            if ( outputFileName == "" )
                outputFileName = "a.out";
 
-            //System.out.println("Writing results in file '" + outputFileName + "'");
-            //System.out.println("");
 
             File outputFile = new File(outputFileName);
             if ( readNum == 1 && outputFile.exists() )
@@ -274,6 +278,23 @@ public class CRISPRFinder
 
             outputFileStream = new FileOutputStream(outputFile, true);
             out = new PrintStream(outputFileStream);
+
+
+            if (! outputGffFileName.equals(""))
+            {
+              File outputGffFile = new File(outputGffFileName);
+              if ( readNum == 1 && outputGffFile.exists() )
+              {
+                 boolean success = outputFile.delete();
+                 if (!success)
+                    throw new IllegalArgumentException("Error: Could not delete file '" + outputFile + "'");
+              }
+
+              outputGffFileStream = new FileOutputStream(outputGffFile, true);
+              gffOut = new PrintStream(outputGffFileStream);
+              gffOut.println("##gff-version 3");
+            	printGffHeader = false;
+            }
          }
 
          if (repeatsFound)
@@ -297,20 +318,15 @@ public class CRISPRFinder
             for (int k = 0; k < CRISPRVector.size(); k++)
             {
                 currCRISPR = (CRISPR)CRISPRVector.elementAt(k);
-                if(outputformat > 0) {
-                	String crispr_id = "CRISPR" + (++totalCrisprCount);
-                	out.print(sequence.getName() + "\tminced:" + minced.VERSION + "\trepeat_region\t");
-                    out.print((currCRISPR.start() + 1) + "\t" + (currCRISPR.end() + 1) + "\t");
-                    out.print(currCRISPR.numRepeats() + "\t.\t.\tID="+ crispr_id + ";rpt_type=direct;rpt_family=CRISPR;rpt_unit_seq="+ currCRISPR.repeatStringAt(1));
-                    out.print("\n");
-                    if(outputformat == 2) {
-                    	out.print(currCRISPR.toGff(sequence.getName(), crispr_id));
-                    }
+                totalCrisprCount++;
+                if(outputformat > 0 && gffOut == null ) {
+                  printGff(out, sequence, currCRISPR);
                 } else {
-                    out.print("CRISPR " + (++totalCrisprCount) + "   Range: " + (currCRISPR.start() + 1) + " - " +  (currCRISPR.end() + 1) + "\n");
-                    out.print(currCRISPR.toString());
-                    out.print("Repeats: " + currCRISPR.numRepeats() + "\t" +  "Average Length: " + currCRISPR.averageRepeatLength() + "\t\t");
-                    out.print("Average Length: " +  currCRISPR.averageSpacerLength() + "\n\n");
+                  printTable(out, currCRISPR);
+                }
+
+                if (gffOut != null) {
+                  printGff(gffOut, sequence, currCRISPR);
                 }
                 if(printSpacers) {
                 	for (int i = 0; i < currCRISPR.numSpacers(); ++i) {
@@ -333,8 +349,33 @@ public class CRISPRFinder
             out.close();
 
       }
-      catch (Exception e)   {   System.err.println ("--Error writing to file-- \n");   }
+      catch (Exception e)   {   
+        System.err.println ("--Error writing to file-- \n");   
+        e.printStackTrace(System.err);
+      }
 
       return true;
    }
+
+   private boolean printGff(PrintStream out, DNASequence sequence, CRISPR currCRISPR) {
+     String crispr_id = "CRISPR" + totalCrisprCount;
+     out.print(sequence.getName() + "\tminced:" + minced.VERSION + "\trepeat_region\t");
+     out.print((currCRISPR.start() + 1) + "\t" + (currCRISPR.end() + 1) + "\t");
+     out.print(currCRISPR.numRepeats() + "\t.\t.\tID="+ crispr_id + ";rpt_type=direct;rpt_family=CRISPR;rpt_unit_seq="+ currCRISPR.repeatStringAt(1));
+     out.print("\n");
+     if(outputformat == 2) {
+       out.print(currCRISPR.toGff(sequence.getName(), crispr_id));
+     }
+    return true;
+   }
+
+   private boolean printTable(PrintStream out, CRISPR currCRISPR) {
+     out.print("CRISPR " + totalCrisprCount + "   Range: " + (currCRISPR.start() + 1) + " - " +  (currCRISPR.end() + 1) + "\n");
+     out.print(currCRISPR.toString());
+     out.print("Repeats: " + currCRISPR.numRepeats() + "\t" +  "Average Length: " + currCRISPR.averageRepeatLength() + "\t\t");
+     out.print("Average Length: " +  currCRISPR.averageSpacerLength() + "\n\n");
+     return true;
+   }
+
 }
+

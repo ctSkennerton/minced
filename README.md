@@ -52,6 +52,11 @@ The output can be large, so save it in a file:
 
     minced -minNR 2 metagenome.fna metagenome.crisprs
 
+You can also save both the table output and the gff output at the same
+time:
+
+    minced ecoli.fna out.txt out.gff
+
 ## COPYRIGHT AND LICENSE
 
 ```
