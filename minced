@@ -30,4 +30,9 @@ PHYS_DIR=`pwd -P`
 
 cd "$ORIG_DIR"
 
-java -jar "$PHYS_DIR"/minced.jar "$@"
+java=java
+if [ -e "$JAVA_HOME/bin/java" ]; then
+  java="$JAVA_HOME/bin/java"
+fi
+
+exec $java -jar "$PHYS_DIR"/minced.jar "$@"
