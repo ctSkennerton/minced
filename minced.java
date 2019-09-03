@@ -292,7 +292,7 @@ public class minced
       System.out.println("minced " + VERSION);
 	   System.out.println("MinCED - Mining CRISPRs in Environmental Datasets (version " + VERSION + ")");
       System.out.println("Copyright 2011      Florent Angly     <florent.angly@gmail.com>");
-      System.out.println("          2013-2018 Connor Skennerton <c.skennerton@gmail.com>");
+      System.out.println("          2013-2019 Connor Skennerton <c.skennerton@gmail.com>");
       System.out.println();
       System.out.println("Minced is a modified version of CRT (www.room220.com/crt)");
       System.out.println("Charles Bland et al., CRISPR Recognition Tool (CRT): a tool for automatic");
