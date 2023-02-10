@@ -188,7 +188,6 @@ public class CRISPRFinder
       for (int j = 0; j <= searchEnd; j = j + skips)
       {
          candidateCRISPR = new CRISPR();
-
          int beginSearch = j + minRepeatLength + minSpacerLength;
          int endSearch = j + maxRepeatLength + maxSpacerLength + searchWindowLength;
 
@@ -347,10 +346,13 @@ public class CRISPRFinder
 
          if (screenDisplay == 0)
             out.close();
+            if (gffOut != null) {
+                gffOut.close();
+            }
 
       }
-      catch (Exception e)   {   
-        System.err.println ("--Error writing to file-- \n");   
+      catch (Exception e)   {
+        System.err.println ("--Error writing to file-- \n");
         e.printStackTrace(System.err);
       }
 
